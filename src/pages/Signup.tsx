@@ -11,11 +11,13 @@ import toast from "react-hot-toast";
 
 const Signup = () => {
 
+  const [showPassword, setShowPassword] =
+    useState(false);
 
   const navigate = useNavigate();
 
 
-  const [name, setName] = 
+  const [name, setName] =
     useState("");
 
 
@@ -27,164 +29,183 @@ const Signup = () => {
     useState("");
 
 
-const [loading, setLoading] = 
+  const [loading, setLoading] =
     useState(false);
 
 
-const handleSignup = async (
-  e: React.FormEvent
-) => {
+  const handleSignup = async (
+    e: React.FormEvent
+  ) => {
 
-  e.preventDefault();
+    e.preventDefault();
 
-  setLoading(true);
+    setLoading(true);
 
-  try {
+    try {
 
-    const userCredential =
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
+      const userCredential =
+        await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+      await updateProfile(
+        userCredential.user,
+        {
+          displayName: name,
+        }
       );
 
-    await updateProfile(
-      userCredential.user,
-      {
-        displayName: name,
-      }
-    );
+      toast.success(
+        "Account Created Successfully!"
+      );
 
-    toast.success(
-      "Account Created Successfully!"
-    );
+      navigate("/");
 
-    navigate("/");
+    } catch (error: any) {
 
-  } catch (error: any) {
+      toast.error(error.message);
 
-    toast.error(error.message);
+    } finally {
 
-  } finally {
+      setLoading(false);
 
-    setLoading(false);
+    }
 
-  }
-
-};
+  };
 
 
 
   return (
-  <div className="signup-page">
+    <div className="signup-page">
 
-    <div className="signup-left">
+      <div className="signup-left">
 
-      <h1>🗳 Polling App</h1>
+        <h1>🗳 Polling App</h1>
 
-      <h2>Create Your Account 🚀</h2>
+        <h2>Create Your Account 🚀</h2>
 
-      <p>
-        Join our Polling App and start creating
-        polls, voting in real-time and managing
-        everything from one dashboard.
-      </p>
+        <p>
+          Join our Polling App and start creating
+          polls, voting in real-time and managing
+          everything from one dashboard.
+        </p>
 
-      <ul>
-        <li>✅ Secure Firebase Authentication</li>
-        <li>✅ Create Unlimited Polls</li>
-        <li>✅ Vote in Real-Time</li>
-        <li>✅ Beautiful Dashboard</li>
-      </ul>
+        <ul>
+          <li>✅ Secure Firebase Authentication</li>
+          <li>✅ Create Unlimited Polls</li>
+          <li>✅ Vote in Real-Time</li>
+          <li>✅ Beautiful Dashboard</li>
+        </ul>
 
-    </div>
+      </div>
 
-    <div className="signup-card">
+      <div className="signup-card">
 
-      <h2>Create Account</h2>
+        <h2>Create Account</h2>
 
-      <p>
-        Create your account to continue
-      </p>
+        <p>
+          Create your account to continue
+        </p>
 
-      <form onSubmit={handleSignup}>
-
-
-<div className="input-group">
-
-  <label>Full Name</label>
-
-  <input
-    type="text"
-    placeholder="Enter your full name"
-    value={name}
-    onChange={(e) =>
-      setName(e.target.value)
-    }
-    required
-  />
-
-</div>
+        <form onSubmit={handleSignup}>
 
 
-        <div className="input-group">
+          <div className="input-group">
 
-          <label>Email</label>
+            <label>Full Name</label>
 
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
-            required
-          />
+            <input
+              type="text"
+              placeholder="Enter your full name"
+              value={name}
+              onChange={(e) =>
+                setName(e.target.value)
+              }
+              required
+            />
+
+          </div>
+
+
+          <div className="input-group">
+
+            <label>Email</label>
+
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) =>
+                setEmail(e.target.value)
+              }
+              required
+            />
+
+          </div>
+
+          <div className="input-group">
+
+            <label>Password</label>
+
+            <div className="password-box">
+
+              <input
+                type={
+                  showPassword
+                    ? "text"
+                    : "password"
+                }
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
+                required
+              />
+
+              <span
+                className="eye-btn"
+                onClick={() =>
+                  setShowPassword(
+                    !showPassword
+                  )
+                }
+              >
+                {showPassword ? "🙈" : "👁"}
+              </span>
+
+            </div>
+
+          </div>
+
+          <button
+            className="signup-btn"
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "Creating Account..."
+              : "🚀 Create Account"}
+          </button>
+
+        </form>
+
+        <div className="login-link">
+
+          Already have an account?
+
+          <Link to="/">
+            Login
+          </Link>
 
         </div>
-
-        <div className="input-group">
-
-          <label>Password</label>
-
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) =>
-              setPassword(e.target.value)
-            }
-            required
-          />
-
-        </div>
-
-        <button
-          className="signup-btn"
-          type="submit"
-          disabled={loading}
-        >
-          {loading
-            ? "Creating Account..."
-            : "🚀 Create Account"}
-        </button>
-
-      </form>
-
-      <div className="login-link">
-
-        Already have an account?
-
-        <Link to="/">
-          Login
-        </Link>
 
       </div>
 
     </div>
-
-  </div>
-);
+  );
 
 
 };

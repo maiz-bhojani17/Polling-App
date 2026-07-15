@@ -2817,3 +2817,29 @@ font-size:12px;
 font-weight:bold;
 
 }
+
+
+
+.password-box{
+position:relative;
+width:100%;
+}
+
+.password-box input{
+width:100%;
+padding-right:50px;
+}
+
+.eye-btn{
+position:absolute;
+right:15px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+font-size:20px;
+user-select:none;
+}
+
+.eye-btn:hover{
+opacity:.8;
+}
