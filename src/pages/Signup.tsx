@@ -173,7 +173,7 @@ const Signup = () => {
                   )
                 }
               >
-                {showPassword ? "🙈" : "👁"}
+                {showPassword ? "🔐" : "🔓"}
               </span>
 
             </div>
