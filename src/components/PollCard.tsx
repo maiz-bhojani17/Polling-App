@@ -16,6 +16,7 @@ import { auth } from "../firebase/firebase";
 import type { Poll } from "../types/poll";
 import ProgressBar from "./ProgressBar";
 import { calculatePercentage } from "../util/percentage";
+import { ADMIN_EMAIL } from "../util/admin";
 
 interface PollCardProps {
   poll: Poll;
@@ -43,6 +44,9 @@ const PollCard = ({
 
   const isOwner =
     currentUser?.uid === poll.ownerId;
+
+    const isAdmin =
+  auth.currentUser?.email === ADMIN_EMAIL;
 
   const totalVotes =
     poll.options.reduce(
@@ -346,7 +350,7 @@ const PollCard = ({
         </button>
       )}
 
-      {isOwner && (
+      {(isOwner || isAdmin) && (
         <div className="poll-actions">
 
           <button

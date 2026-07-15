@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../redux/store";
 import { logoutUser } from "../redux/authSlice";
 import toast from "react-hot-toast";
+import { ADMIN_EMAIL } from "../util/admin";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -104,7 +105,15 @@ const Navbar = () => {
 
           <div className="user-info">
             <span className="username">
+
               {getUserName()}
+
+              {user?.email === ADMIN_EMAIL && (
+                <span className="admin-badge">
+                  👑 Admin
+                </span>
+              )}
+
             </span>
 
             <span className="email">

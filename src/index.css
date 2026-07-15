@@ -2797,3 +2797,23 @@ font-size:28px;
 .owner-name strong {
   color: #4f46e5;
 }
+
+
+
+.admin-badge{
+
+margin-left:8px;
+
+background:#facc15;
+
+color:#000;
+
+padding:3px 10px;
+
+border-radius:20px;
+
+font-size:12px;
+
+font-weight:bold;
+
+}

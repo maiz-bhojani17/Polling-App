@@ -8,6 +8,7 @@ import PollCard from "../components/PollCard";
 import { fetchPolls } from "../redux/pollThunk";
 import type { AppDispatch, RootState } from "../redux/store";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { ADMIN_EMAIL } from "../util/admin";
 
 
 const Dashboard = () => {
@@ -53,6 +54,10 @@ const Dashboard = () => {
     0
   );
 
+  const user = useSelector(
+    (state: RootState) => state.auth.user
+  );
+
   const userName = useMemo(() => {
     const email =
       localStorage.getItem("userEmail") || "";
@@ -94,6 +99,18 @@ const Dashboard = () => {
             }}
           >
             👋 Welcome Back, {userName}
+
+            {user?.email === ADMIN_EMAIL && (
+              <span
+                style={{
+                  marginLeft: "10px",
+                  color: "#FFD700",
+                  fontSize: "22px",
+                }}
+              >
+                👑 Admin
+              </span>
+            )}
           </h1>
 
           <p
